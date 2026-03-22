@@ -7,13 +7,27 @@
 
 **Yield curve fitting, analysis, and decomposition for R.**
 
-## What is a yield curve?
+## Why does this package exist?
 
-A yield curve plots the relationship between interest rates and the time to maturity of debt instruments. It is one of the most important objects in finance — central banks, bond traders, and macro researchers all use yield curves to understand market expectations about future interest rates, inflation, and economic growth.
+Government bond yields are published daily at a handful of maturities — 1-month, 3-month, 1-year, 2-year, 5-year, 10-year, 30-year. That's what you see on a Bloomberg terminal or in a spreadsheet. But those raw data points only tell you part of the story.
 
-The most common yield curve models are Nelson-Siegel (1987) and Svensson (1994), which decompose the curve into interpretable factors: level, slope, and curvature. These parsimonious models are used by central banks worldwide (the BIS surveys show over 20 central banks use Nelson-Siegel or Svensson for their official yield curve estimates).
+In practice, fixed income analysts need to answer questions that raw yields can't:
 
-`yieldcurves` provides a complete toolkit for fitting, analysing, and decomposing yield curves in R. It is a pure computation package — it does not download data. You supply two numeric vectors (maturities in years and rates as decimals) and the package does the rest.
+- **"What's the implied 5-year rate, 5 years from now?"** — This requires extracting forward rates from the term structure. You can't read this off a spreadsheet; it requires fitting a smooth curve and computing `f(t) = r(t) + t * r'(t)`, the instantaneous forward rate derived from the zero curve.
+
+- **"How much will I earn from holding a 10-year bond for one month?"** — This is carry and roll-down analysis. Carry is the yield you earn minus funding cost. Roll-down is the capital gain from the bond "sliding down" the curve as it ages. Both require interpolating the fitted curve at fractional maturities.
+
+- **"Are rates moving because of level shifts, slope changes, or curvature?"** — Principal component analysis decomposes a time series of yield curves into orthogonal factors. Litterman and Scheinkman (1991) showed that three factors (level, slope, curvature) explain over 95% of yield curve movements.
+
+- **"What discount factor should I use for a 7.5-year cash flow?"** — The Treasury publishes rates at 5, 7, and 10 years, but not 7.5. You need a fitted model to interpolate, then convert: `DF(t) = exp(-r(t) * t)`.
+
+- **"How do I convert par rates to zero rates?"** — Par rates (coupon bond yields) and zero rates (discount yields) are different objects. Converting between them requires iterative bootstrap stripping — solving a system of equations where each zero rate depends on all shorter zero rates.
+
+- **"What's the duration and convexity of my portfolio at these maturities?"** — Risk measures that quantify price sensitivity to rate changes. Modified duration requires the yield at the exact maturity, which again requires a fitted curve.
+
+The Nelson-Siegel (1987) and Svensson (1994) models solve the interpolation problem elegantly by fitting the entire curve with 4-6 parameters that have economic meaning: level (long-run rate), slope (term premium), and curvature (medium-term humps). Over 20 central banks use these models for their official yield curve estimates (BIS, 2005).
+
+`yieldcurves` puts all of this maths into clean, tested R functions — so you can go from raw yields to forward curves, discount factors, carry analysis, and PCA decomposition in a few lines of code.
 
 ## Where do I get yield data?
 
