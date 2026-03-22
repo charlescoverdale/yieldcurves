@@ -13,7 +13,34 @@ A yield curve plots the relationship between interest rates and the time to matu
 
 The most common yield curve models are Nelson-Siegel (1987) and Svensson (1994), which decompose the curve into interpretable factors: level, slope, and curvature. These parsimonious models are used by central banks worldwide (the BIS surveys show over 20 central banks use Nelson-Siegel or Svensson for their official yield curve estimates).
 
-`yieldcurves` provides a complete toolkit for fitting, analysing, and decomposing yield curves in R. It works with yield data from any source — Treasury yields, swap rates, corporate bonds — and requires no external API calls.
+`yieldcurves` provides a complete toolkit for fitting, analysing, and decomposing yield curves in R. It is a pure computation package — it does not download data. You supply two numeric vectors (maturities in years and rates as decimals) and the package does the rest.
+
+## Where do I get yield data?
+
+`yieldcurves` works with any yield data you can get into R. Here are some common sources:
+
+```r
+# US Treasury yields from FRED
+library(fred)
+treasury <- fred_series(c("DGS1", "DGS2", "DGS5", "DGS10", "DGS30"))
+maturities <- c(1, 2, 5, 10, 30)
+rates <- as.numeric(treasury[nrow(treasury), -1]) / 100
+
+# UK gilt yields from the Bank of England
+library(boe)
+gilts <- boe_yield_curve()
+
+# Euro area yield curves from the ECB
+library(readecb)
+ecb <- ecb_yield_curve()
+
+# Or just type them in directly
+maturities <- c(0.25, 0.5, 1, 2, 3, 5, 7, 10, 20, 30)
+rates <- c(0.052, 0.050, 0.048, 0.045, 0.043, 0.042, 0.041,
+           0.040, 0.042, 0.043)
+```
+
+All you need is a vector of maturities (in years) and a vector of rates (as decimals, e.g., 0.05 for 5%). The package handles everything from there.
 
 ## How does this compare to existing packages?
 
