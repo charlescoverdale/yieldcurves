@@ -17,30 +17,61 @@ The most common yield curve models are Nelson-Siegel (1987) and Svensson (1994),
 
 ## Where do I get yield data?
 
-`yieldcurves` works with any yield data you can get into R. Here are some common sources:
+`yieldcurves` is a pure computation package — it does not download data itself. You bring two numeric vectors:
+
+- **maturities**: time to maturity in years (e.g., `c(0.25, 1, 2, 5, 10, 30)`)
+- **rates**: yields as decimals (e.g., `c(0.052, 0.048, 0.045, 0.042, 0.040, 0.043)`)
+
+Here are the main sources of government bond yield data and how to get them into R:
+
+| Country | Source | Free? | R package | FRED series codes |
+|---------|--------|-------|-----------|-------------------|
+| US | US Treasury / FRED | Yes | [fred](https://cran.r-project.org/package=fred) | DGS1MO, DGS3MO, DGS6MO, DGS1, DGS2, DGS3, DGS5, DGS7, DGS10, DGS20, DGS30 |
+| UK | Bank of England | Yes | [boe](https://cran.r-project.org/package=boe) | `boe_yield_curve()` |
+| Euro area | European Central Bank | Yes | [readecb](https://cran.r-project.org/package=readecb) | `ecb_yield_curve()` |
+| Japan | Ministry of Finance | Yes | Download CSV from mof.go.jp | — |
+| Australia | RBA | Yes | Download CSV from rba.gov.au | — |
+| Canada | Bank of Canada | Yes | — | DGS series on FRED |
+| Any | Bloomberg / Refinitiv | Paid | Rblpapi / refinitiv | — |
+
+### Step-by-step example: US Treasury yields from FRED
 
 ```r
-# US Treasury yields from FRED
+# 1. Install the fred package (one time)
+install.packages("fred")
+
+# 2. Get a free API key from https://fred.stlouisfed.org/docs/api/api_key.html
+fred::fred_set_key("your_api_key_here")
+
+# 3. Download Treasury constant maturity rates
 library(fred)
 treasury <- fred_series(c("DGS1", "DGS2", "DGS5", "DGS10", "DGS30"))
+
+# 4. Extract the most recent observation
+latest <- treasury[nrow(treasury), ]
 maturities <- c(1, 2, 5, 10, 30)
-rates <- as.numeric(treasury[nrow(treasury), -1]) / 100
+rates <- as.numeric(latest[, -1]) / 100  # FRED reports in percent, convert to decimal
 
-# UK gilt yields from the Bank of England
-library(boe)
-gilts <- boe_yield_curve()
+# 5. Fit a yield curve
+library(yieldcurves)
+fit <- yc_nelson_siegel(maturities, rates)
+plot(fit)
+```
 
-# Euro area yield curves from the ECB
-library(readecb)
-ecb <- ecb_yield_curve()
+### Or just type rates in directly
 
-# Or just type them in directly
+You don't need an API at all. If you have yield data from any source (a spreadsheet, a Bloomberg terminal, a central bank website), just type it in:
+
+```r
+library(yieldcurves)
+
 maturities <- c(0.25, 0.5, 1, 2, 3, 5, 7, 10, 20, 30)
 rates <- c(0.052, 0.050, 0.048, 0.045, 0.043, 0.042, 0.041,
            0.040, 0.042, 0.043)
-```
 
-All you need is a vector of maturities (in years) and a vector of rates (as decimals, e.g., 0.05 for 5%). The package handles everything from there.
+fit <- yc_nelson_siegel(maturities, rates)
+fit
+```
 
 ## How does this compare to existing packages?
 
