@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 <!-- badges: end -->
 
-**Fit, interpolate, and analyse government bond yield curves in R.**
+**An R package for working with yield curves: fit smooth curves to bond yields, extract forward rates and discount factors, compute duration and convexity, and decompose curve movements.**
 
 ## Installation
 
