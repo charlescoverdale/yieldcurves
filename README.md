@@ -242,15 +242,6 @@ plot(fit)
 
 ---
 
-## Key concepts
-
-- **Zero rates** (spot rates): yields on zero-coupon bonds. Pay nothing until maturity, then receive face value. These are the building blocks.
-- **Par rates**: the coupon rate at which a bond prices at par (100). This is what the news means by "the 10-year yield."
-- **Forward rates**: rates implied by the curve for a future period. The "5y5y forward" is the rate you could lock in today for a 5-year loan starting in 5 years.
-- All rates in this package are **decimals**: 5% = `0.05`, 50 basis points = `0.005`.
-
----
-
 ## Functions
 
 ### Curve construction and fitting
