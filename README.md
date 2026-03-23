@@ -5,11 +5,9 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 <!-- badges: end -->
 
-**Fit, interpolate, and analyse yield curves in R: from raw government bond yields to forward rates, discount factors, risk measures, and principal component decomposition.**
+**Fit, interpolate, and analyse government bond yield curves in R.**
 
 ## Installation
-
-Install the development version from GitHub:
 
 ```r
 # install.packages("devtools")
@@ -37,27 +35,39 @@ plot(fit)
 
 ---
 
-## Why?
+## Why yieldcurves?
 
-Government bond yields are published daily at a handful of maturities: 1-month, 3-month, 1-year, 2-year, 5-year, 10-year, 30-year. Those raw data points are what you see on a Bloomberg terminal or in a spreadsheet. But they only tell you part of the story.
+Government bond yields are published daily at a handful of maturities: 1-month, 3-month, 1-year, 2-year, 5-year, 10-year, 30-year. But most questions in fixed income require yields at maturities that are not published, or require derived quantities (forward rates, discount factors, risk measures) that cannot be read off a table. If you need a discount factor at 7.5 years, or the implied rate for a 5-year loan starting in 5 years, you need a fitted model.
 
-In practice, bond analysts and economists need to answer questions that raw yields cannot:
+The Nelson-Siegel (1987) and Svensson (1994) models are the standard solution. They fit the entire curve with 4 to 6 parameters that have economic meaning: level (long-run rate), slope (term premium), and curvature (medium-term humps). Over 20 central banks use these models for their official yield curve estimates. Once you have a fitted curve, you can extract forward rates, discount factors, carry and roll-down, duration and convexity, and Z-spreads.
 
-- "What rate does the market imply for a 5-year loan starting in 5 years?" (requires fitting a smooth curve and extracting forward rates)
-- "How much will I earn from holding a 10-year bond for one month, assuming the curve does not move?" (carry and roll-down analysis)
-- "Is this spread movement driven by level shifts, slope changes, or curvature?" (principal component decomposition)
-- "What discount factor should I use for a 7.5-year cash flow?" (the Treasury publishes rates at 5, 7, and 10 years, not 7.5)
-- "What is the Z-spread on this corporate bond relative to the Treasury curve?" (requires discounting each cash flow at the interpolated zero rate plus a constant spread)
+There are two existing R packages for yield curve fitting (YieldCurve and termstrc), but both are dated and neither covers the full workflow from fitting through to risk measures and PCA decomposition. `yieldcurves` fills this gap with a modern, lightweight package that works with plain numeric vectors and has no heavy dependencies.
 
-The Nelson-Siegel (1987) and Svensson (1994) models solve the interpolation problem by fitting the entire curve with 4 to 6 parameters that have economic meaning: level (long-run rate), slope (term premium), and curvature (medium-term humps). Over 20 central banks use these models for their official yield curve estimates (BIS, 2005).
+## How does this compare to existing packages?
 
-`yieldcurves` puts all of this into clean, tested R functions. You go from raw yields to forward curves, discount factors, risk measures, carry analysis, and PCA decomposition in a few lines of code.
+| Feature | yieldcurves | YieldCurve | termstrc |
+|---------|-------------|------------|----------|
+| Nelson-Siegel fitting | Yes | Yes | Yes |
+| Svensson fitting | Yes | Yes | Yes |
+| Cubic spline | Yes | No | Yes |
+| Weighted fitting | Yes | No | No |
+| Forward rates (analytical) | Yes | No | Yes |
+| Discount factors | Yes | No | Yes |
+| Duration and convexity | Yes | No | No |
+| Z-spread | Yes | No | No |
+| Key rate durations | Yes | No | No |
+| Par/zero conversions | Yes | No | Yes |
+| PCA decomposition | Yes | No | No |
+| Carry and roll-down | Yes | No | No |
+| Slope measures | Yes | No | No |
+| Works with plain vectors | Yes | No (needs xts/zoo) | No |
+| Last updated | 2026 | 2022 | 2015 |
 
 ---
 
 ## Examples
 
-### What does the fitted curve look like?
+### Fit a yield curve
 
 The Nelson-Siegel model takes two inputs: maturities (in years) and rates (as decimals, so 5% = 0.05). It returns a fitted curve you can query at any maturity.
 
@@ -80,15 +90,15 @@ fit
 plot(fit)
 ```
 
-### What does the market imply about future rates?
+### Extract forward rates and discount factors
 
-Forward rates answer "where does the curve say rates will be at some future date?" Discount factors answer "what is a future cash flow worth today?"
+Forward rates tell you what the market implies about future interest rates. Discount factors tell you what a future cash flow is worth today.
 
 ```r
 # Forward rates at 1, 5, and 10 years
 yc_forward(fit, maturities = c(1, 5, 10))
 #>   maturity forward_rate
-#> 1        1       0.0468   # Market implies 4.68% at the 1-year point
+#> 1        1       0.0468
 #> 2        5       0.0393
 #> 3       10       0.0413
 
@@ -101,9 +111,9 @@ yc_discount(fit, maturities = c(1, 5, 10, 30))
 #> 4       30          0.2817   # $1 in 30 years is worth $0.28 today
 ```
 
-### How much do I earn from holding a bond?
+### Compute carry and roll-down
 
-Carry is the yield income minus the funding cost. Roll-down is the capital gain from the bond "sliding down" the curve as its remaining maturity shortens. Both assume the curve does not move.
+How much do you earn from holding a bond, assuming the curve does not move? Carry is the yield income minus the funding cost. Roll-down is the capital gain as the bond's remaining maturity shortens and it slides to a lower-rate part of the curve.
 
 ```r
 yc_carry(fit, maturities = c(2, 5, 10, 30))
@@ -114,7 +124,7 @@ yc_carry(fit, maturities = c(2, 5, 10, 30))
 #> 4       30  0.000033 -0.001507 -0.001474   # Negative on the 30Y
 ```
 
-### What is the duration and convexity of a coupon bond?
+### Compute duration and convexity for a coupon bond
 
 Duration measures how sensitive a bond's price is to rate changes. A modified duration of 7.87 means a 1% rate rise causes roughly a 7.87% price drop.
 
@@ -135,9 +145,9 @@ yc_bond_duration(face = 100, coupon_rate = 0.05, maturity = 10,
 #> [1] 104.01
 ```
 
-### What is the Z-spread on this bond?
+### Compute the Z-spread on a bond
 
-The Z-spread is the constant spread added to each point on the benchmark zero curve that reprices the bond to its market price. A positive Z-spread means the bond trades at a discount to the benchmark.
+The Z-spread is the constant spread over the benchmark zero curve that reprices a bond to its market price. A positive Z-spread means the bond yields more than the benchmark.
 
 ```r
 # Benchmark zero curve
@@ -150,7 +160,7 @@ result$zspread
 #> [1] 0.0148   # 148 bps over the benchmark curve
 ```
 
-### Are yield curve moves driven by level, slope, or curvature?
+### Decompose yield curve movements with PCA
 
 Principal component analysis decomposes a time series of yield curves into orthogonal factors. Litterman and Scheinkman (1991) showed that three factors (level, slope, curvature) explain over 95% of yield curve movements.
 
@@ -178,21 +188,24 @@ plot(pca)
 
 ---
 
-## Where do I get yield data?
+## What data do I need?
 
-`yieldcurves` is a pure computation package. It does not download data. You bring two numeric vectors: maturities (in years) and rates (as decimals).
+You supply two numeric vectors: **maturities** (in years) and **rates** (as decimals, so 5% = 0.05). You can type them in directly or pull them from a data source.
 
-| Country | Source | Free? | R package | Notes |
-|---------|--------|-------|-----------|-------|
-| US | US Treasury / FRED | Yes | [fred](https://cran.r-project.org/package=fred) | Series: DGS1MO, DGS3MO, DGS1, DGS2, DGS5, DGS10, DGS30 |
-| UK | Bank of England | Yes | [boe](https://cran.r-project.org/package=boe) | `boe_yield_curve()` returns fitted curves directly |
-| Euro area | European Central Bank | Yes | [readecb](https://cran.r-project.org/package=readecb) | `ecb_yield_curve()` returns fitted curves directly |
-| Japan | Ministry of Finance | Yes | Download CSV from mof.go.jp | |
-| Australia | RBA | Yes | Download CSV from rba.gov.au | |
-| Canada | Bank of Canada | Yes | | DGS series available on FRED |
-| Any | Bloomberg / Refinitiv | Paid | Rblpapi / refinitiv | |
+### Option 1: Type rates in directly
 
-### Step-by-step: US Treasury yields from FRED
+```r
+library(yieldcurves)
+
+maturities <- c(0.25, 0.5, 1, 2, 3, 5, 7, 10, 20, 30)
+rates <- c(0.052, 0.050, 0.048, 0.045, 0.043, 0.042, 0.041,
+           0.040, 0.042, 0.043)
+
+fit <- yc_nelson_siegel(maturities, rates)
+plot(fit)
+```
+
+### Option 2: Pull US Treasury yields from FRED
 
 ```r
 # 1. Install the fred package (one time)
@@ -216,30 +229,24 @@ fit <- yc_nelson_siegel(maturities, rates)
 plot(fit)
 ```
 
-### Or just type rates in directly
+### Where to find yield data
 
-You do not need an API. If you have yield data from a spreadsheet, a terminal, or a central bank website, just type it in:
-
-```r
-library(yieldcurves)
-
-maturities <- c(0.25, 0.5, 1, 2, 3, 5, 7, 10, 20, 30)
-rates <- c(0.052, 0.050, 0.048, 0.045, 0.043, 0.042, 0.041,
-           0.040, 0.042, 0.043)
-
-fit <- yc_nelson_siegel(maturities, rates)
-plot(fit)
-```
+| Country | Source | R package | Series / function |
+|---------|--------|-----------|-------------------|
+| US | US Treasury / FRED | [fred](https://cran.r-project.org/package=fred) | DGS1MO, DGS3MO, DGS1, DGS2, DGS5, DGS10, DGS30 |
+| UK | Bank of England | [boe](https://cran.r-project.org/package=boe) | `boe_yield_curve()` |
+| Euro area | European Central Bank | [readecb](https://cran.r-project.org/package=readecb) | `ecb_yield_curve()` |
+| Japan | Ministry of Finance | Download CSV | mof.go.jp |
+| Australia | RBA | Download CSV | rba.gov.au |
+| Canada | Bank of Canada | [fred](https://cran.r-project.org/package=fred) | DGS series on FRED |
 
 ---
 
 ## Key concepts
 
-A few things worth knowing if you are new to yield curves:
-
-- **Zero rates** (also called spot rates) are the yields on zero-coupon bonds. Pay nothing until maturity, then receive face value. These are the building blocks.
-- **Par rates** are the coupon rates at which a bond prices at par (100). These are what you see quoted as "the 10-year yield" in the news.
-- **Forward rates** are the rates implied by the curve for a future period. The "5-year rate, 5 years forward" is the rate you could lock in today for a loan starting in 5 years.
+- **Zero rates** (spot rates): yields on zero-coupon bonds. Pay nothing until maturity, then receive face value. These are the building blocks.
+- **Par rates**: the coupon rate at which a bond prices at par (100). This is what the news means by "the 10-year yield."
+- **Forward rates**: rates implied by the curve for a future period. The "5y5y forward" is the rate you could lock in today for a 5-year loan starting in 5 years.
 - All rates in this package are **decimals**: 5% = `0.05`, 50 basis points = `0.005`.
 
 ---
@@ -294,34 +301,11 @@ All `yc_curve` and `yc_pca` objects have `print()`, `summary()`, and `plot()` me
 
 ---
 
-## References
+## Academic references
 
 - Nelson, C.R. and Siegel, A.F. (1987). Parsimonious Modeling of Yield Curves. *The Journal of Business*, 60(4), 473-489. [doi:10.1086/296409](https://doi.org/10.1086/296409)
 - Svensson, L.E.O. (1994). Estimating and Interpreting Forward Interest Rates: Sweden 1992-1994. *NBER Working Paper*, 4871. [doi:10.3386/w4871](https://doi.org/10.3386/w4871)
 - Litterman, R. and Scheinkman, J. (1991). Common Factors Affecting Bond Returns. *The Journal of Fixed Income*, 1(1), 54-61. [doi:10.3905/jfi.1991.692347](https://doi.org/10.3905/jfi.1991.692347)
-
----
-
-## How does this compare to existing packages?
-
-| Feature | yieldcurves | YieldCurve | termstrc |
-|---------|-------------|------------|----------|
-| Nelson-Siegel fitting | Yes | Yes | Yes |
-| Svensson fitting | Yes | Yes | Yes |
-| Cubic spline | Yes | No | Yes |
-| Weighted fitting | Yes | No | No |
-| Forward rates (analytical) | Yes | No | Yes |
-| Discount factors | Yes | No | Yes |
-| Duration and convexity | Yes | No | No |
-| Z-spread | Yes | No | No |
-| Key rate durations | Yes | No | No |
-| Par/zero conversions | Yes | No | Yes |
-| PCA decomposition | Yes | No | No |
-| Carry and roll-down | Yes | No | No |
-| Slope measures | Yes | No | No |
-| Works with plain vectors | Yes | No (needs xts/zoo) | No |
-| Base R graphics | Yes | Yes | No |
-| Last updated | 2026 | 2022 | 2015 |
 
 ---
 
