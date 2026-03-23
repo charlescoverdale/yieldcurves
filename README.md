@@ -190,6 +190,15 @@ plot(pca)
 
 ---
 
+## Key terms
+
+- **Zero rates** (spot rates): yields on zero-coupon bonds. These are the building blocks of the yield curve.
+- **Par rates**: the coupon rate at which a bond prices at par (100). This is what the news means by "the 10-year yield."
+- **Forward rates**: rates implied by the curve for a future period. The "5y5y forward" is the rate the market implies for a 5-year loan starting in 5 years.
+- **Basis points (bps)**: 1 bp = 0.01%. All rates in this package are decimals: 5% = `0.05`, 50 bps = `0.005`.
+
+---
+
 ## What data do I need?
 
 You supply two numeric vectors: **maturities** (in years) and **rates** (as decimals, so 5% = 0.05). You can type them in directly or pull them from a data source.
