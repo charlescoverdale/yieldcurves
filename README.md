@@ -43,6 +43,8 @@ The Nelson-Siegel (1987) and Svensson (1994) models are the standard solution. T
 
 There are two existing R packages for yield curve fitting (YieldCurve and termstrc), but both are dated and neither covers the full workflow from fitting through to risk measures and PCA decomposition. `yieldcurves` fills this gap with a modern, lightweight package that works with plain numeric vectors and has no heavy dependencies.
 
+---
+
 ## How does this compare to existing packages?
 
 | Feature | yieldcurves | YieldCurve | termstrc |
