@@ -328,4 +328,6 @@ Found a bug or have a feature request? Open an issue at [github.com/charlescover
 
 ---
 
+## Keywords
+
 r, r-package, yield-curve, fixed-income, nelson-siegel, svensson, term-structure, interest-rates, bond-math, finance, duration, convexity, z-spread
