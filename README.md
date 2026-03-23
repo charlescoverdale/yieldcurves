@@ -40,7 +40,7 @@ Government bond yields are published daily at a handful of maturities: 1-month, 
 
 The Nelson-Siegel (1987) and Svensson (1994) models are the standard solution. They fit the entire curve with 4 to 6 parameters that have economic meaning: level (long-run rate), slope (term premium), and curvature (medium-term humps). Over 20 central banks use these models for their official yield curve estimates. Once you have a fitted curve, you can extract forward rates, discount factors, carry and roll-down, duration and convexity, and Z-spreads.
 
-There are two existing R packages for yield curve fitting (YieldCurve and termstrc), but both are dated and neither covers the full workflow from fitting through to risk measures and PCA decomposition. `yieldcurves` fills this gap with a modern, lightweight package that works with plain numeric vectors and has no heavy dependencies.
+There are two existing R packages in this space. `YieldCurve` (last updated 2022) fits Nelson-Siegel and Svensson models but requires xts/zoo objects as input, does not compute duration, convexity, Z-spreads, or PCA, and has no carry/roll-down analysis. `termstrc` was more comprehensive (cubic splines, forward rates) but was archived from CRAN in 2018 due to failing checks and is no longer maintained. Neither package covers the full workflow from curve fitting through to risk measures and portfolio analytics. `yieldcurves` fills this gap: it works with plain numeric vectors, has no heavy dependencies, and covers fitting, extraction, risk measures, and decomposition in one package.
 
 
 ## How does this compare to existing packages?
