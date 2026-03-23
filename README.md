@@ -33,7 +33,6 @@ fit
 plot(fit)
 ```
 
----
 
 ## Why yieldcurves?
 
@@ -43,7 +42,6 @@ The Nelson-Siegel (1987) and Svensson (1994) models are the standard solution. T
 
 There are two existing R packages for yield curve fitting (YieldCurve and termstrc), but both are dated and neither covers the full workflow from fitting through to risk measures and PCA decomposition. `yieldcurves` fills this gap with a modern, lightweight package that works with plain numeric vectors and has no heavy dependencies.
 
----
 
 ## How does this compare to existing packages?
 
@@ -65,7 +63,6 @@ There are two existing R packages for yield curve fitting (YieldCurve and termst
 | Works with plain vectors | Yes | No (needs xts/zoo) | No |
 | Last updated | 2026 | 2022 | 2015 |
 
----
 
 ## Examples
 
@@ -188,7 +185,6 @@ pca
 plot(pca)
 ```
 
----
 
 ## Key terms
 
@@ -197,7 +193,6 @@ plot(pca)
 - **Forward rates**: rates implied by the curve for a future period. The "5y5y forward" is the rate the market implies for a 5-year loan starting in 5 years.
 - **Basis points (bps)**: 1 bp = 0.01%. All rates in this package are decimals: 5% = `0.05`, 50 bps = `0.005`.
 
----
 
 ## What data do I need?
 
@@ -251,7 +246,6 @@ plot(fit)
 | Australia | RBA | Download CSV | rba.gov.au |
 | Canada | Bank of Canada | [fred](https://cran.r-project.org/package=fred) | DGS series on FRED |
 
----
 
 ## Functions
 
@@ -301,7 +295,6 @@ plot(fit)
 
 All `yc_curve` and `yc_pca` objects have `print()`, `summary()`, and `plot()` methods.
 
----
 
 ## Academic references
 
@@ -309,7 +302,6 @@ All `yc_curve` and `yc_pca` objects have `print()`, `summary()`, and `plot()` me
 - Svensson, L.E.O. (1994). Estimating and Interpreting Forward Interest Rates: Sweden 1992-1994. *NBER Working Paper*, 4871. [doi:10.3386/w4871](https://doi.org/10.3386/w4871)
 - Litterman, R. and Scheinkman, J. (1991). Common Factors Affecting Bond Returns. *The Journal of Fixed Income*, 1(1), 54-61. [doi:10.3905/jfi.1991.692347](https://doi.org/10.3905/jfi.1991.692347)
 
----
 
 ## Related packages
 
@@ -320,13 +312,11 @@ All `yc_curve` and `yc_pca` objects have `print()`, `summary()`, and `plot()` me
 | [readecb](https://github.com/charlescoverdale/readecb) | European Central Bank data (includes euro area yield curves) |
 | [debtkit](https://github.com/charlescoverdale/debtkit) | Debt sustainability analysis and fiscal projections |
 
----
 
 ## Issues
 
 Found a bug or have a feature request? Open an issue at [github.com/charlescoverdale/yieldcurves/issues](https://github.com/charlescoverdale/yieldcurves/issues).
 
----
 
 ## Keywords
 
