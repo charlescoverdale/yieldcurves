@@ -4,12 +4,15 @@
 \alias{yc_zero_to_par}
 \title{Convert Zero Rates to Par Rates}
 \usage{
-yc_zero_to_par(maturities, zero_rates)
+yc_zero_to_par(maturities, zero_rates, frequency = 1)
 }
 \arguments{
 \item{maturities}{Numeric vector of maturities in years.}
 
 \item{zero_rates}{Numeric vector of zero rates as decimals.}
+
+\item{frequency}{Integer. Coupon frequency per year: 1 for annual
+(default) or 2 for semi-annual.}
 }
 \value{
 A data frame with columns \code{maturity} and \code{par_rate}.
@@ -22,4 +25,7 @@ maturity T is the coupon rate that makes a bond price equal to par.
 maturities <- c(1, 2, 3, 5, 10)
 zero_rates <- c(0.040, 0.042, 0.043, 0.044, 0.045)
 yc_zero_to_par(maturities, zero_rates)
+
+# Semi-annual coupons
+yc_zero_to_par(c(0.5, 1, 2), c(0.04, 0.042, 0.043), frequency = 2)
 }

@@ -69,10 +69,39 @@ yc_nelson_siegel <- function(maturities, rates, tau_init = 1,
   # Default weights
   w <- if (is.null(weights)) rep(1, length(maturities)) else weights
 
-  # Starting values
-  beta0_init <- rates[length(rates)]
-  beta1_init <- rates[1] - rates[length(rates)]
-  beta2_init <- 2 * mean(rates) - rates[1] - rates[length(rates)]
+  # Multi-start grid search over tau (BIS/ECB methodology)
+  # For each tau, the NS model is linear in (beta0, beta1, beta2),
+  # so solve via weighted OLS to find the best starting point.
+  tau_grid <- c(0.5, 1, 2, 3, 5, 8, 12)
+  best_sse <- Inf
+  best_start <- NULL
+
+  W <- diag(w)
+
+  for (tau_try in tau_grid) {
+    X <- ns_loadings(maturities, tau_try)
+    XtWX <- crossprod(X, W %*% X)
+    XtWy <- crossprod(X, W %*% rates)
+    beta_ols <- tryCatch(
+      as.numeric(solve(XtWX, XtWy)),
+      error = function(e) NULL
+    )
+    if (is.null(beta_ols)) next
+    fitted_try <- as.numeric(X %*% beta_ols)
+    sse <- sum(w * (rates - fitted_try)^2)
+    if (sse < best_sse) {
+      best_sse <- sse
+      best_start <- c(beta_ols, tau_try)
+    }
+  }
+
+  # Fallback if grid search fails
+ if (is.null(best_start)) {
+    beta0_init <- rates[length(rates)]
+    beta1_init <- rates[1] - rates[length(rates)]
+    beta2_init <- 2 * mean(rates) - rates[1] - rates[length(rates)]
+    best_start <- c(beta0_init, beta1_init, beta2_init, tau_init)
+  }
 
   # Objective function
   obj <- function(par) {
@@ -84,9 +113,9 @@ yc_nelson_siegel <- function(maturities, rates, tau_init = 1,
     sum(w * (rates - fitted)^2)
   }
 
-  # Optimise with box constraints on tau
+  # Local optimisation from best grid point
   result <- optim(
-    par = c(beta0_init, beta1_init, beta2_init, tau_init),
+    par = best_start,
     fn = obj,
     method = "L-BFGS-B",
     lower = c(-Inf, -Inf, -Inf, 0.01),

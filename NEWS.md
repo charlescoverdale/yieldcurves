@@ -1,3 +1,19 @@
+# yieldcurves 0.2.0
+
+* Multi-start optimization for Nelson-Siegel and Svensson fitting. A grid
+  search over tau values finds the best OLS starting point before local
+  optimization, following BIS/ECB methodology. This reduces sensitivity to
+  initial values and improves fit quality.
+* Semi-annual coupon bootstrap: `yc_par_to_zero()` and `yc_zero_to_par()` now
+  accept `frequency = 2` for semi-annual coupon bonds.
+* New `yc_bond_duration()` computes Macaulay duration, modified duration, and
+  convexity for coupon-bearing bonds (annual, semi-annual, or continuous
+  compounding).
+* New `yc_zspread()` computes the Z-spread (zero-volatility spread) for a bond
+  given a benchmark zero curve.
+* New `yc_key_rate_duration()` computes key rate durations using triangular
+  bump profiles at specified tenors.
+
 # yieldcurves 0.1.0
 
 * Initial CRAN release.

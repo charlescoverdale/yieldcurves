@@ -69,14 +69,43 @@ yc_svensson <- function(maturities, rates, tau1_init = 1, tau2_init = 5,
   # Default weights
   w <- if (is.null(weights)) rep(1, length(maturities)) else weights
 
-  # Two-stage: first fit NS, then extend to Svensson
-  ns_fit <- yc_nelson_siegel(maturities, rates, tau_init = tau1_init,
-                              weights = weights, type = type, date = date)
+  # Multi-start grid search over (tau1, tau2) pairs (BIS/ECB methodology)
+  # For each (tau1, tau2), the Svensson model is linear in
+  # (beta0, beta1, beta2, beta3), so solve via weighted OLS.
+  tau1_grid <- c(1, 2, 5, 8)
+  tau2_grid <- c(0.5, 1, 3, 5)
+  best_sse <- Inf
+  best_start <- NULL
 
-  beta0_init <- ns_fit$params$beta0
-  beta1_init <- ns_fit$params$beta1
-  beta2_init <- ns_fit$params$beta2
-  tau1_from_ns <- ns_fit$params$tau
+  W <- diag(w)
+
+  for (tau1_try in tau1_grid) {
+    for (tau2_try in tau2_grid) {
+      if (abs(tau1_try - tau2_try) < 0.1) next
+      X <- sv_loadings(maturities, tau1_try, tau2_try)
+      XtWX <- crossprod(X, W %*% X)
+      XtWy <- crossprod(X, W %*% rates)
+      beta_ols <- tryCatch(
+        as.numeric(solve(XtWX, XtWy)),
+        error = function(e) NULL
+      )
+      if (is.null(beta_ols)) next
+      fitted_try <- as.numeric(X %*% beta_ols)
+      sse <- sum(w * (rates - fitted_try)^2)
+      if (sse < best_sse) {
+        best_sse <- sse
+        best_start <- c(beta_ols, tau1_try, tau2_try)
+      }
+    }
+  }
+
+  # Fallback: use NS fit as starting point
+  if (is.null(best_start)) {
+    ns_fit <- yc_nelson_siegel(maturities, rates, tau_init = tau1_init,
+                                weights = weights, type = type, date = date)
+    best_start <- c(ns_fit$params$beta0, ns_fit$params$beta1,
+                    ns_fit$params$beta2, 0, ns_fit$params$tau, tau2_init)
+  }
 
   obj <- function(par) {
     fitted <- sv_rate(maturities, par[1], par[2], par[3], par[4], par[5], par[6])
@@ -84,7 +113,7 @@ yc_svensson <- function(maturities, rates, tau1_init = 1, tau2_init = 5,
   }
 
   result <- optim(
-    par = c(beta0_init, beta1_init, beta2_init, 0, tau1_from_ns, tau2_init),
+    par = best_start,
     fn = obj,
     method = "L-BFGS-B",
     lower = c(-Inf, -Inf, -Inf, -Inf, 0.01, 0.01),
