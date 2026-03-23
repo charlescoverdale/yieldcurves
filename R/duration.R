@@ -148,8 +148,8 @@ yc_bond_duration <- function(face = 100, coupon_rate, maturity, yield,
     # Modified = Macaulay / (1 + y/freq)
     mod_dur <- mac_dur / (1 + y_per)
 
-    # Convexity = (1/P) * sum(t_i * (t_i + 1/freq) * CF_i / (1+y/freq)^i)
-    convexity <- sum(times * (times + 1 / freq) * coupon_cf * disc) / price
+    # Convexity = (1/P) * sum(t_i * (t_i + 1/freq) * CF_i / (1+y/freq)^i) / (1+y/freq)^2
+    convexity <- sum(times * (times + 1 / freq) * coupon_cf * disc) / (price * (1 + y_per)^2)
   }
 
   list(

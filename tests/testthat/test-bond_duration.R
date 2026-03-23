@@ -23,9 +23,9 @@ test_that("yc_bond_duration: hand-computed 2Y 5% at 4% semi-annual", {
   mac_expected <- (0.5 * pv1 + 1.0 * pv2 + 1.5 * pv3 + 2.0 * pv4) / price_expected
   mod_expected <- mac_expected / 1.02
 
-  # Convexity: sum(t*(t+0.5)*CF/(1+y/2)^i) / P
+  # Convexity: sum(t*(t+0.5)*CF/(1+y/2)^i) / (P * (1+y/2)^2)
   conv_expected <- (0.5 * 1.0 * pv1 + 1.0 * 1.5 * pv2 +
-                      1.5 * 2.0 * pv3 + 2.0 * 2.5 * pv4) / price_expected
+                      1.5 * 2.0 * pv3 + 2.0 * 2.5 * pv4) / (price_expected * 1.02^2)
 
   result <- yc_bond_duration(face = 100, coupon_rate = 0.05, maturity = 2,
                               yield = 0.04, frequency = 2)
