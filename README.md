@@ -13,6 +13,9 @@
 ## Installation
 
 ```r
+install.packages("yieldcurves")
+
+# Or install the development version from GitHub
 # install.packages("devtools")
 devtools::install_github("charlescoverdale/yieldcurves")
 ```
