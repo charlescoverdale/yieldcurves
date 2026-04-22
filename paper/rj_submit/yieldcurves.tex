@@ -185,9 +185,9 @@ RMSE at the cost of two additional parameters. The gain is most
 visible at the very long end, where the two models disagree by
 about three basis points.
 
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=1\linewidth,alt={A scatter plot of US Treasury yields against maturity on a log scale from three months to thirty years. Ten points trace an upward-sloping curve. Two fitted lines overlay the points: a solid Nelson-Siegel line and a dashed Svensson line. The two lines are very close at short and medium maturities and diverge slightly at the long end.}]{figures/fig1_ns_svensson} 
+{\centering \includegraphics[width=1\linewidth,alt={A scatter plot of US Treasury yields against maturity on a log scale from three months to thirty years. Ten points trace an upward-sloping curve. Two fitted lines overlay the points: a solid Nelson-Siegel line and a dashed Svensson line. The two lines are very close at short and medium maturities and diverge slightly at the long end.},]{figures/fig1_ns_svensson} 
 
 }
 
@@ -241,9 +241,9 @@ curves from the current Nelson-Siegel fit. Where the spot curve
 rises, the forward curve sits above it; the gap is the additional
 yield an investor demands for locking in a longer rate today.
 
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=1\linewidth,alt={A line chart of US Treasury yields against maturity from zero to thirty years. A solid blue line is the spot rate curve, rising from about four per cent at the short end to about five per cent at the long end. A red dashed line is the instantaneous forward rate curve, which sits above the spot curve where the spot curve rises and converges to it at the long end.}]{figures/fig2_forward} 
+{\centering \includegraphics[width=1\linewidth,alt={A line chart of US Treasury yields against maturity from zero to thirty years. A solid blue line is the spot rate curve, rising from about four per cent at the short end to about five per cent at the long end. A red dashed line is the instantaneous forward rate curve, which sits above the spot curve where the spot curve rises and converges to it at the long end.},]{figures/fig2_forward} 
 
 }
 
@@ -260,9 +260,9 @@ zero-coupon duration equals maturity, but a coupon bond of the same
 maturity has lower duration because the intermediate coupons carry
 weight that shortens the effective payment horizon.
 
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=1\linewidth,alt={A line chart of modified duration against maturity from zero to thirty years. A solid blue line for zero-coupon bonds rises roughly linearly from zero to about twenty-eight years. A red dashed line for a 5 per cent semi-annual coupon bond sits below the zero-coupon line throughout, rising from zero to about fifteen years, with the gap widening at longer maturities.}]{figures/fig4_duration} 
+{\centering \includegraphics[width=1\linewidth,alt={A line chart of modified duration against maturity from zero to thirty years. A solid blue line for zero-coupon bonds rises roughly linearly from zero to about twenty-eight years. A red dashed line for a 5 per cent semi-annual coupon bond sits below the zero-coupon line throughout, rising from zero to about fifteen years, with the gap widening at longer maturities.},]{figures/fig4_duration} 
 
 }
 
@@ -295,9 +295,9 @@ like this one assign more variance to PC1 than long-run figures in
 \citet{litterman1991common}; users studying shorter, rangebound samples
 may prefer \code{scale = TRUE}.
 
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=1\linewidth,alt={A line chart of principal component loadings against maturity from zero to thirty years. The first principal component (blue) is roughly flat around 0.4 across maturities, the classical level factor. The second principal component (red) starts negative at short maturities, crosses zero near five years, and rises to positive values at long maturities, the slope factor. The third principal component (green) is humped, positive at short and long ends and negative in the middle, the curvature factor.}]{figures/fig3_pca} 
+{\centering \includegraphics[width=1\linewidth,alt={A line chart of principal component loadings against maturity from zero to thirty years. The first principal component (blue) is roughly flat around 0.4 across maturities, the classical level factor. The second principal component (red) starts negative at short maturities, crosses zero near five years, and rises to positive values at long maturities, the slope factor. The third principal component (green) is humped, positive at short and long ends and negative in the middle, the curvature factor.},]{figures/fig3_pca} 
 
 }
 
@@ -333,9 +333,9 @@ carry and roll-down are modest. At the belly (five- to ten-year)
 they are comparable and additive. At the long end, carry dominates
 and roll-down falls because the curve flattens.
 
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=1\linewidth,alt={A grouped bar chart of expected three-month return contributions in basis points against maturity from two to thirty years. For each maturity there are two bars: blue for carry and red for roll-down. Carry rises with maturity; roll-down is largest at the belly of the curve (five to ten years) and smaller at both the short and long ends.}]{figures/fig5_carry} 
+{\centering \includegraphics[width=1\linewidth,alt={A grouped bar chart of expected three-month return contributions in basis points against maturity from two to thirty years. For each maturity there are two bars: blue for carry and red for roll-down. Carry rises with maturity; roll-down is largest at the belly of the curve (five to ten years) and smaller at both the short and long ends.},]{figures/fig5_carry} 
 
 }
 
@@ -373,9 +373,9 @@ market's expectation of eventual rate cuts. The current curve is
 positively-sloped again, with short-end yields having come down
 from their peak.
 
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=1\linewidth,alt={A line chart of US Treasury yields against maturity on a log scale from three months to thirty years. Three curves are shown: a low and flat curve for December 2019 near two per cent, an inverted curve for October 2023 with short rates above long rates around five per cent, and a more recent upward-sloping curve between four and five per cent.}]{figures/fig6_curves} 
+{\centering \includegraphics[width=1\linewidth,alt={A line chart of US Treasury yields against maturity on a log scale from three months to thirty years. Three curves are shown: a low and flat curve for December 2019 near two per cent, an inverted curve for October 2023 with short rates above long rates around five per cent, and a more recent upward-sloping curve between four and five per cent.},]{figures/fig6_curves} 
 
 }
 
@@ -452,7 +452,6 @@ examples in this paper. The author thanks the R Core Team and CRAN
 maintainers for the infrastructure that supports open-source
 statistical software.
 
-\section*{References}
 \bibliography{RJreferences.bib}
 
 \address{%
