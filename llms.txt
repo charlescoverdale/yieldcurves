@@ -2,6 +2,8 @@
 
 > Fits yield curves using Nelson-Siegel (1987) <doi:10. Install with `install.packages("yieldcurves")`.
 
+Full API reference (for agents): https://raw.githubusercontent.com/charlescoverdale/yieldcurves/main/llms-full.txt
+
 Version: 0.1.0. License: MIT.
 
 ## Functions
