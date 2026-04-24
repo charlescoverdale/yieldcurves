@@ -44,3 +44,7 @@ reference:
       - yc_zero_to_par
       - yc_discount
 
+
+  - title: "Package"
+    contents:
+      - yieldcurves-package
