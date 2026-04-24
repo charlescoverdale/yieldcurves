@@ -48,3 +48,13 @@ reference:
   - title: "Package"
     contents:
       - yieldcurves-package
+
+  - title: "S3 Methods"
+    desc: "Plot, print, and summary methods for curve objects"
+    contents:
+      - plot.yc_curve
+      - plot.yc_pca
+      - print.yc_curve
+      - print.yc_pca
+      - summary.yc_curve
+      - summary.yc_pca
