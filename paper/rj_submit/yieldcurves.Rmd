@@ -91,10 +91,12 @@ four-parameter functional form consisting of a level component, a
 slope component decaying exponentially with maturity, and a
 curvature component producing a medium-maturity hump. Over two
 decades later the Nelson-Siegel form remains the workhorse of
-central-bank yield-curve estimation, used by the Federal Reserve,
-the European Central Bank, the Bank of Canada, and over twenty
-other central banks in the Bank for International Settlements
-survey [@bis2005zero].
+central-bank yield-curve estimation, used by the European Central
+Bank, the Bank of Canada, and over twenty other central banks
+surveyed by the Bank for International Settlements [@bis2005zero].
+The Federal Reserve publishes a six-parameter Svensson extension
+following @gurkaynak2007us rather than the four-parameter
+Nelson-Siegel form.
 
 @svensson1994estimating generalises Nelson-Siegel with a second
 curvature term, giving a six-parameter form with enough flexibility

@@ -3,7 +3,8 @@
 
 ## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE,
-                      fig.align = "center", out.width = "100%")
+                      fig.align = "center", out.width = "100%",
+                      fig.pos = "H", out.extra = "")
 
 
 ## ----ns-svensson, fig.cap = "Nelson-Siegel and Svensson fits to the US Treasury yield curve, most recent trading day. Points are the Constant Maturity Treasury rates from FRED at ten maturities. Solid line: Nelson-Siegel, RMSE 4.5 basis points. Dashed: Svensson, RMSE 2.9 basis points. Maturity on a log scale.", fig.alt = "A scatter plot of US Treasury yields against maturity on a log scale from three months to thirty years. Ten points trace an upward-sloping curve. Two fitted lines overlay the points: a solid Nelson-Siegel line and a dashed Svensson line. The two lines are very close at short and medium maturities and diverge slightly at the long end."----
