@@ -317,6 +317,7 @@ All `yc_curve` and `yc_pca` objects have `print()`, `summary()`, and `plot()` me
 | [fred](https://github.com/charlescoverdale/fred) | Federal Reserve Economic Data (includes Treasury rates) |
 | [readecb](https://github.com/charlescoverdale/readecb) | European Central Bank data (includes euro area yield curves) |
 | [debtkit](https://github.com/charlescoverdale/debtkit) | Debt sustainability analysis and fiscal projections |
+| [mpshock](https://github.com/charlescoverdale/mpshock) | Monetary policy shock series (US/UK/AU) |
 
 
 ## Issues
