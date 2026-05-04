@@ -90,98 +90,98 @@
 <h2 id="how-does-this-compare-to-existing-packages">How does this compare to existing packages?<a class="anchor" aria-label="anchor" href="#how-does-this-compare-to-existing-packages"></a>
 </h2>
 <table class="table">
-<thead><tr class="header">
+<thead><tr>
 <th>Feature</th>
 <th>yieldcurves</th>
 <th>YieldCurve</th>
 <th>termstrc</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>Nelson-Siegel fitting</td>
 <td>Yes</td>
 <td>Yes</td>
 <td>Yes</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Svensson fitting</td>
 <td>Yes</td>
 <td>Yes</td>
 <td>Yes</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Cubic spline</td>
 <td>Yes</td>
 <td>No</td>
 <td>Yes</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Weighted fitting</td>
 <td>Yes</td>
 <td>No</td>
 <td>No</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Forward rates (analytical)</td>
 <td>Yes</td>
 <td>No</td>
 <td>Yes</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Discount factors</td>
 <td>Yes</td>
 <td>No</td>
 <td>Yes</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Duration and convexity</td>
 <td>Yes</td>
 <td>No</td>
 <td>No</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Z-spread</td>
 <td>Yes</td>
 <td>No</td>
 <td>No</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Key rate durations</td>
 <td>Yes</td>
 <td>No</td>
 <td>No</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Par/zero conversions</td>
 <td>Yes</td>
 <td>No</td>
 <td>Yes</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>PCA decomposition</td>
 <td>Yes</td>
 <td>No</td>
 <td>No</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Carry and roll-down</td>
 <td>Yes</td>
 <td>No</td>
 <td>No</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Slope measures</td>
 <td>Yes</td>
 <td>No</td>
 <td>No</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Works with plain vectors</td>
 <td>Yes</td>
 <td>No (needs xts/zoo)</td>
 <td>No</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Last updated</td>
 <td>2026</td>
 <td>2022</td>
@@ -372,44 +372,44 @@
 <col width="23%">
 <col width="40%">
 </colgroup>
-<thead><tr class="header">
+<thead><tr>
 <th>Country</th>
 <th>Source</th>
 <th>R package</th>
 <th>Series / function</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>US</td>
 <td>US Treasury / FRED</td>
 <td><a href="https://cran.r-project.org/package=fred" class="external-link">fred</a></td>
 <td>DGS1MO, DGS3MO, DGS1, DGS2, DGS5, DGS10, DGS30</td>
 </tr>
-<tr class="even">
+<tr>
 <td>UK</td>
 <td>Bank of England</td>
 <td><a href="https://cran.r-project.org/package=boe" class="external-link">boe</a></td>
 <td><code>boe_yield_curve()</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Euro area</td>
 <td>European Central Bank</td>
 <td><a href="https://cran.r-project.org/package=readecb" class="external-link">readecb</a></td>
 <td><code>ecb_yield_curve()</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td>Japan</td>
 <td>Ministry of Finance</td>
 <td>Download CSV</td>
 <td>mof.go.jp</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Australia</td>
 <td>RBA</td>
 <td>Download CSV</td>
 <td>rba.gov.au</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Canada</td>
 <td>Bank of Canada</td>
 <td><a href="https://cran.r-project.org/package=fred" class="external-link">fred</a></td>
@@ -426,28 +426,28 @@
 <h3 id="curve-construction-and-fitting">Curve construction and fitting<a class="anchor" aria-label="anchor" href="#curve-construction-and-fitting"></a>
 </h3>
 <table class="table">
-<thead><tr class="header">
+<thead><tr>
 <th>Function</th>
 <th>Description</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><code><a href="reference/yc_curve.html">yc_curve()</a></code></td>
 <td>Create a yield curve object from maturity-rate pairs</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code><a href="reference/yc_nelson_siegel.html">yc_nelson_siegel()</a></code></td>
 <td>Fit a Nelson-Siegel (1987) model</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code><a href="reference/yc_svensson.html">yc_svensson()</a></code></td>
 <td>Fit a Svensson (1994) model</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code><a href="reference/yc_cubic_spline.html">yc_cubic_spline()</a></code></td>
 <td>Fit a cubic spline</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code><a href="reference/yc_fit.html">yc_fit()</a></code></td>
 <td>Unified fitting interface (dispatches to the above)</td>
 </tr>
@@ -462,24 +462,24 @@
 <col width="43%">
 <col width="56%">
 </colgroup>
-<thead><tr class="header">
+<thead><tr>
 <th>Function</th>
 <th>Description</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><code><a href="reference/yc_predict.html">yc_predict()</a></code></td>
 <td>Evaluate a fitted curve at new maturities</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code><a href="reference/yc_forward.html">yc_forward()</a></code></td>
 <td>Extract instantaneous or forward-forward rates</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code><a href="reference/yc_discount.html">yc_discount()</a></code></td>
 <td>Compute discount factors (continuous, annual, or semi-annual)</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code><a href="reference/yc_interpolate.html">yc_interpolate()</a></code></td>
 <td>Interpolate between observed rates (linear, log-linear, or cubic)</td>
 </tr>
@@ -494,16 +494,16 @@
 <col width="43%">
 <col width="56%">
 </colgroup>
-<thead><tr class="header">
+<thead><tr>
 <th>Function</th>
 <th>Description</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><code><a href="reference/yc_par_to_zero.html">yc_par_to_zero()</a></code></td>
 <td>Convert par rates to zero rates via bootstrap stripping</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code><a href="reference/yc_zero_to_par.html">yc_zero_to_par()</a></code></td>
 <td>Convert zero rates to par rates</td>
 </tr>
@@ -518,24 +518,24 @@
 <col width="43%">
 <col width="56%">
 </colgroup>
-<thead><tr class="header">
+<thead><tr>
 <th>Function</th>
 <th>Description</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><code><a href="reference/yc_duration.html">yc_duration()</a></code></td>
 <td>Macaulay/modified duration and convexity for zero-coupon bonds</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code><a href="reference/yc_bond_duration.html">yc_bond_duration()</a></code></td>
 <td>Duration and convexity for coupon-bearing bonds</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code><a href="reference/yc_zspread.html">yc_zspread()</a></code></td>
 <td>Z-spread (zero-volatility spread) computation</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code><a href="reference/yc_key_rate_duration.html">yc_key_rate_duration()</a></code></td>
 <td>Key rate durations with triangular bump profiles</td>
 </tr>
@@ -550,24 +550,24 @@
 <col width="43%">
 <col width="56%">
 </colgroup>
-<thead><tr class="header">
+<thead><tr>
 <th>Function</th>
 <th>Description</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><code><a href="reference/yc_carry.html">yc_carry()</a></code></td>
 <td>Carry and roll-down decomposition</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code><a href="reference/yc_pca.html">yc_pca()</a></code></td>
 <td>Principal component analysis of yield curve time series</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><code><a href="reference/yc_slope.html">yc_slope()</a></code></td>
 <td>Spread measures (2s10s, 2s30s, butterfly, etc.)</td>
 </tr>
-<tr class="even">
+<tr>
 <td><code><a href="reference/yc_level_slope_curvature.html">yc_level_slope_curvature()</a></code></td>
 <td>Level, slope, and curvature factor extraction</td>
 </tr>
@@ -596,26 +596,30 @@
 <col width="40%">
 <col width="59%">
 </colgroup>
-<thead><tr class="header">
+<thead><tr>
 <th>Package</th>
 <th>Description</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><a href="https://github.com/charlescoverdale/boe" class="external-link">boe</a></td>
 <td>Bank of England data (includes official yield curves)</td>
 </tr>
-<tr class="even">
+<tr>
 <td><a href="https://github.com/charlescoverdale/fred" class="external-link">fred</a></td>
 <td>Federal Reserve Economic Data (includes Treasury rates)</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><a href="https://github.com/charlescoverdale/readecb" class="external-link">readecb</a></td>
 <td>European Central Bank data (includes euro area yield curves)</td>
 </tr>
-<tr class="even">
+<tr>
 <td><a href="https://github.com/charlescoverdale/debtkit" class="external-link">debtkit</a></td>
 <td>Debt sustainability analysis and fiscal projections</td>
+</tr>
+<tr>
+<td><a href="https://github.com/charlescoverdale/mpshock" class="external-link">mpshock</a></td>
+<td>Monetary policy shock series (US/UK/AU)</td>
 </tr>
 </tbody>
 </table>

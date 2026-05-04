@@ -7,6 +7,7 @@ convexity, and decompose curve movements.**
 ## Installation
 
 ``` r
+
 install.packages("yieldcurves")
 
 # Or install the development version from GitHub
@@ -15,6 +16,7 @@ devtools::install_github("charlescoverdale/yieldcurves")
 ```
 
 ``` r
+
 library(yieldcurves)
 
 # US Treasury yields: maturities in years, rates as decimals (5% = 0.05)
@@ -91,6 +93,7 @@ rates (as decimals, so 5% = 0.05). It returns a fitted curve you can
 query at any maturity.
 
 ``` r
+
 library(yieldcurves)
 
 maturities <- c(0.25, 0.5, 1, 2, 3, 5, 7, 10, 20, 30)
@@ -115,6 +118,7 @@ Forward rates tell you what the market implies about future interest
 rates. Discount factors tell you what a future cash flow is worth today.
 
 ``` r
+
 # Forward rates at 1, 5, and 10 years
 yc_forward(fit, maturities = c(1, 5, 10))
 #>   maturity forward_rate
@@ -139,6 +143,7 @@ capital gain as the bond’s remaining maturity shortens and it slides to
 a lower-rate part of the curve.
 
 ``` r
+
 yc_carry(fit, maturities = c(2, 5, 10, 30))
 #>   maturity     carry   rolldown      total
 #> 1        2  0.000170  0.005143  0.005313   # 53 bps total on the 2Y
@@ -154,6 +159,7 @@ modified duration of 7.87 means a 1% rate rise causes roughly a 7.87%
 price drop.
 
 ``` r
+
 # 10-year bond with 5% coupon at 4.5% yield, semi-annual coupons
 yc_bond_duration(face = 100, coupon_rate = 0.05, maturity = 10,
                  yield = 0.045, frequency = 2)
@@ -177,6 +183,7 @@ reprices a bond to its market price. A positive Z-spread means the bond
 yields more than the benchmark.
 
 ``` r
+
 # Benchmark zero curve
 curve <- yc_curve(c(0.5, 1, 2, 5, 10), c(0.03, 0.035, 0.04, 0.042, 0.045))
 
@@ -195,6 +202,7 @@ three factors (level, slope, curvature) explain over 95% of yield curve
 movements.
 
 ``` r
+
 # Simulate a time series of yield curves (200 days, 5 tenors)
 set.seed(42)
 n_days <- 200
@@ -237,6 +245,7 @@ from a data source.
 ### Option 1: Type rates in directly
 
 ``` r
+
 library(yieldcurves)
 
 maturities <- c(0.25, 0.5, 1, 2, 3, 5, 7, 10, 20, 30)
@@ -250,6 +259,7 @@ plot(fit)
 ### Option 2: Pull US Treasury yields from FRED
 
 ``` r
+
 # 1. Install the fred package (one time)
 install.packages("fred")
 
@@ -273,60 +283,60 @@ plot(fit)
 
 ### Where to find yield data
 
-| Country   | Source                | R package                                             | Series / function                              |
-|-----------|-----------------------|-------------------------------------------------------|------------------------------------------------|
-| US        | US Treasury / FRED    | [fred](https://cran.r-project.org/package=fred)       | DGS1MO, DGS3MO, DGS1, DGS2, DGS5, DGS10, DGS30 |
-| UK        | Bank of England       | [boe](https://cran.r-project.org/package=boe)         | `boe_yield_curve()`                            |
-| Euro area | European Central Bank | [readecb](https://cran.r-project.org/package=readecb) | `ecb_yield_curve()`                            |
-| Japan     | Ministry of Finance   | Download CSV                                          | mof.go.jp                                      |
-| Australia | RBA                   | Download CSV                                          | rba.gov.au                                     |
-| Canada    | Bank of Canada        | [fred](https://cran.r-project.org/package=fred)       | DGS series on FRED                             |
+| Country | Source | R package | Series / function |
+|----|----|----|----|
+| US | US Treasury / FRED | [fred](https://cran.r-project.org/package=fred) | DGS1MO, DGS3MO, DGS1, DGS2, DGS5, DGS10, DGS30 |
+| UK | Bank of England | [boe](https://cran.r-project.org/package=boe) | `boe_yield_curve()` |
+| Euro area | European Central Bank | [readecb](https://cran.r-project.org/package=readecb) | `ecb_yield_curve()` |
+| Japan | Ministry of Finance | Download CSV | mof.go.jp |
+| Australia | RBA | Download CSV | rba.gov.au |
+| Canada | Bank of Canada | [fred](https://cran.r-project.org/package=fred) | DGS series on FRED |
 
 ## Functions
 
 ### Curve construction and fitting
 
-| Function                                                                                             | Description                                          |
-|------------------------------------------------------------------------------------------------------|------------------------------------------------------|
-| [`yc_curve()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_curve.md)                 | Create a yield curve object from maturity-rate pairs |
-| [`yc_nelson_siegel()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_nelson_siegel.md) | Fit a Nelson-Siegel (1987) model                     |
-| [`yc_svensson()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_svensson.md)           | Fit a Svensson (1994) model                          |
-| [`yc_cubic_spline()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_cubic_spline.md)   | Fit a cubic spline                                   |
-| [`yc_fit()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_fit.md)                     | Unified fitting interface (dispatches to the above)  |
+| Function | Description |
+|----|----|
+| [`yc_curve()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_curve.md) | Create a yield curve object from maturity-rate pairs |
+| [`yc_nelson_siegel()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_nelson_siegel.md) | Fit a Nelson-Siegel (1987) model |
+| [`yc_svensson()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_svensson.md) | Fit a Svensson (1994) model |
+| [`yc_cubic_spline()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_cubic_spline.md) | Fit a cubic spline |
+| [`yc_fit()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_fit.md) | Unified fitting interface (dispatches to the above) |
 
 ### Evaluation and extraction
 
-| Function                                                                                         | Description                                                       |
-|--------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|
-| [`yc_predict()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_predict.md)         | Evaluate a fitted curve at new maturities                         |
-| [`yc_forward()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_forward.md)         | Extract instantaneous or forward-forward rates                    |
-| [`yc_discount()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_discount.md)       | Compute discount factors (continuous, annual, or semi-annual)     |
+| Function | Description |
+|----|----|
+| [`yc_predict()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_predict.md) | Evaluate a fitted curve at new maturities |
+| [`yc_forward()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_forward.md) | Extract instantaneous or forward-forward rates |
+| [`yc_discount()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_discount.md) | Compute discount factors (continuous, annual, or semi-annual) |
 | [`yc_interpolate()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_interpolate.md) | Interpolate between observed rates (linear, log-linear, or cubic) |
 
 ### Rate conversions
 
-| Function                                                                                         | Description                                             |
-|--------------------------------------------------------------------------------------------------|---------------------------------------------------------|
+| Function | Description |
+|----|----|
 | [`yc_par_to_zero()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_par_to_zero.md) | Convert par rates to zero rates via bootstrap stripping |
-| [`yc_zero_to_par()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_zero_to_par.md) | Convert zero rates to par rates                         |
+| [`yc_zero_to_par()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_zero_to_par.md) | Convert zero rates to par rates |
 
 ### Risk measures
 
-| Function                                                                                                     | Description                                                    |
-|--------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|
-| [`yc_duration()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_duration.md)                   | Macaulay/modified duration and convexity for zero-coupon bonds |
-| [`yc_bond_duration()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_bond_duration.md)         | Duration and convexity for coupon-bearing bonds                |
-| [`yc_zspread()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_zspread.md)                     | Z-spread (zero-volatility spread) computation                  |
-| [`yc_key_rate_duration()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_key_rate_duration.md) | Key rate durations with triangular bump profiles               |
+| Function | Description |
+|----|----|
+| [`yc_duration()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_duration.md) | Macaulay/modified duration and convexity for zero-coupon bonds |
+| [`yc_bond_duration()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_bond_duration.md) | Duration and convexity for coupon-bearing bonds |
+| [`yc_zspread()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_zspread.md) | Z-spread (zero-volatility spread) computation |
+| [`yc_key_rate_duration()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_key_rate_duration.md) | Key rate durations with triangular bump profiles |
 
 ### Analysis and decomposition
 
-| Function                                                                                                             | Description                                             |
-|----------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|
-| [`yc_carry()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_carry.md)                                 | Carry and roll-down decomposition                       |
-| [`yc_pca()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_pca.md)                                     | Principal component analysis of yield curve time series |
-| [`yc_slope()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_slope.md)                                 | Spread measures (2s10s, 2s30s, butterfly, etc.)         |
-| [`yc_level_slope_curvature()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_level_slope_curvature.md) | Level, slope, and curvature factor extraction           |
+| Function | Description |
+|----|----|
+| [`yc_carry()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_carry.md) | Carry and roll-down decomposition |
+| [`yc_pca()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_pca.md) | Principal component analysis of yield curve time series |
+| [`yc_slope()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_slope.md) | Spread measures (2s10s, 2s30s, butterfly, etc.) |
+| [`yc_level_slope_curvature()`](https://charlescoverdale.github.io/yieldcurves/reference/yc_level_slope_curvature.md) | Level, slope, and curvature factor extraction |
 
 All `yc_curve` and `yc_pca` objects have
 [`print()`](https://rdrr.io/r/base/print.html),
@@ -347,12 +357,13 @@ All `yc_curve` and `yc_pca` objects have
 
 ## Related packages
 
-| Package                                                | Description                                                  |
-|--------------------------------------------------------|--------------------------------------------------------------|
-| [boe](https://github.com/charlescoverdale/boe)         | Bank of England data (includes official yield curves)        |
-| [fred](https://github.com/charlescoverdale/fred)       | Federal Reserve Economic Data (includes Treasury rates)      |
+| Package | Description |
+|----|----|
+| [boe](https://github.com/charlescoverdale/boe) | Bank of England data (includes official yield curves) |
+| [fred](https://github.com/charlescoverdale/fred) | Federal Reserve Economic Data (includes Treasury rates) |
 | [readecb](https://github.com/charlescoverdale/readecb) | European Central Bank data (includes euro area yield curves) |
-| [debtkit](https://github.com/charlescoverdale/debtkit) | Debt sustainability analysis and fiscal projections          |
+| [debtkit](https://github.com/charlescoverdale/debtkit) | Debt sustainability analysis and fiscal projections |
+| [mpshock](https://github.com/charlescoverdale/mpshock) | Monetary policy shock series (US/UK/AU) |
 
 ## Issues
 
