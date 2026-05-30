@@ -1,5 +1,8 @@
 # yieldcurves
 
+A technical working paper for this package can be found
+[here](https://charlescoverdale.github.io/files/coverdale_yieldcurves_2026.pdf).
+
 **An R package for working with yield curves: fit smooth curves to bond
 yields, extract forward rates and discount factors, compute duration and
 convexity, and decompose curve movements.**
