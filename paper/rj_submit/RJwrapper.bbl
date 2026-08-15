@@ -1,0 +1,115 @@
+\begin{thebibliography}{19}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Adrian et~al.(2013)Adrian, Crump, and Moench]{adrian2013pricing}
+T.~Adrian, R.~K. Crump, and E.~Moench.
+\newblock Pricing the term structure with linear regressions.
+\newblock \emph{Journal of Financial Economics}, 110\penalty0 (1):\penalty0 110--138, 2013.
+\newblock \doi{10.1016/j.jfineco.2013.04.009}.
+
+\bibitem[Ang and Piazzesi(2003)]{ang2003no}
+A.~Ang and M.~Piazzesi.
+\newblock A no-arbitrage vector autoregression of term structure dynamics with macroeconomic and latent variables.
+\newblock \emph{Journal of Monetary Economics}, 50\penalty0 (4):\penalty0 745--787, 2003.
+\newblock \doi{10.1016/S0304-3932(03)00032-1}.
+
+\bibitem[{Bank for International Settlements}(2005)]{bis2005zero}
+{Bank for International Settlements}.
+\newblock Zero-coupon yield curves: Technical documentation.
+\newblock BIS Papers~25, Bank for International Settlements, 2005.
+
+\bibitem[Bauer and Rudebusch(2020)]{bauer2020interest}
+M.~D. Bauer and G.~D. Rudebusch.
+\newblock Interest rates under falling stars.
+\newblock \emph{American Economic Review}, 110\penalty0 (5):\penalty0 1316--1354, 2020.
+\newblock \doi{10.1257/aer.20171822}.
+
+\bibitem[Christensen et~al.(2011)Christensen, Diebold, and Rudebusch]{christensen2011affine}
+J.~H.~E. Christensen, F.~X. Diebold, and G.~D. Rudebusch.
+\newblock The affine arbitrage-free class of {N}elson-{S}iegel term structure models.
+\newblock \emph{Journal of Econometrics}, 164\penalty0 (1):\penalty0 4--20, 2011.
+\newblock \doi{10.1016/j.jeconom.2011.02.011}.
+
+\bibitem[Cochrane and Piazzesi(2005)]{cochrane2005bond}
+J.~H. Cochrane and M.~Piazzesi.
+\newblock Bond risk premia.
+\newblock \emph{American Economic Review}, 95\penalty0 (1):\penalty0 138--160, 2005.
+\newblock \doi{10.1257/0002828053828581}.
+
+\bibitem[Diebold and Li(2006)]{diebold2006forecasting}
+F.~X. Diebold and C.~Li.
+\newblock Forecasting the term structure of government bond yields.
+\newblock \emph{Journal of Econometrics}, 130\penalty0 (2):\penalty0 337--364, 2006.
+\newblock \doi{10.1016/j.jeconom.2005.03.005}.
+
+\bibitem[Diebold and Rudebusch(2013)]{diebold2013yield}
+F.~X. Diebold and G.~D. Rudebusch.
+\newblock \emph{Yield Curve Modeling and Forecasting: The Dynamic {N}elson-{S}iegel Approach}.
+\newblock Princeton University Press, Princeton, 2013.
+
+\bibitem[Fisher et~al.(1995)Fisher, Nychka, and Zervos]{fisher1995fitting}
+M.~Fisher, D.~Nychka, and D.~Zervos.
+\newblock Fitting the term structure of interest rates with smoothing splines.
+\newblock FEDS Working Paper 95-1, Board of Governors of the Federal Reserve System, 1995.
+
+\bibitem[Guirreri(2022)]{guirreri2022yieldcurve}
+S.~S. Guirreri.
+\newblock \emph{{YieldCurve: Modelling and Estimation of the Yield Curve}}, 2022.
+\newblock R package version 5.1.
+
+\bibitem[G\"urkaynak et~al.(2007)G\"urkaynak, Sack, and Wright]{gurkaynak2007us}
+R.~S. G\"urkaynak, B.~Sack, and J.~H. Wright.
+\newblock The {U.S.} {T}reasury yield curve: 1961 to the present.
+\newblock \emph{Journal of Monetary Economics}, 54\penalty0 (8):\penalty0 2291--2304, 2007.
+\newblock \doi{10.1016/j.jmoneco.2007.06.029}.
+
+\bibitem[Hicks(1939)]{hicks1939value}
+J.~R. Hicks.
+\newblock \emph{Value and Capital: An Inquiry into Some Fundamental Principles of Economic Theory}.
+\newblock Clarendon Press, Oxford, 1939.
+
+\bibitem[Ho(1992)]{ho1992key}
+T.~S.~Y. Ho.
+\newblock Key rate durations: Measures of interest rate risks.
+\newblock \emph{Journal of Fixed Income}, 2\penalty0 (2):\penalty0 29--44, 1992.
+\newblock \doi{10.3905/jfi.1992.408049}.
+
+\bibitem[Litterman and Scheinkman(1991)]{litterman1991common}
+R.~Litterman and J.~Scheinkman.
+\newblock Common factors affecting bond returns.
+\newblock \emph{Journal of Fixed Income}, 1\penalty0 (1):\penalty0 54--61, 1991.
+\newblock \doi{10.3905/jfi.1991.692347}.
+
+\bibitem[Macaulay(1938)]{macaulay1938movements}
+F.~R. Macaulay.
+\newblock \emph{Some Theoretical Problems Suggested by the Movements of Interest Rates, Bond Yields and Stock Prices in the {U}nited {S}tates since 1856}.
+\newblock National Bureau of Economic Research, New York, 1938.
+
+\bibitem[McCulloch(1971)]{mcculloch1971measuring}
+J.~H. McCulloch.
+\newblock Measuring the term structure of interest rates.
+\newblock \emph{Journal of Business}, 44\penalty0 (1):\penalty0 19--31, 1971.
+\newblock \doi{10.1086/295329}.
+
+\bibitem[Nelson and Siegel(1987)]{nelson1987parsimonious}
+C.~R. Nelson and A.~F. Siegel.
+\newblock Parsimonious modeling of yield curves.
+\newblock \emph{Journal of Business}, 60\penalty0 (4):\penalty0 473--489, 1987.
+\newblock \doi{10.1086/296409}.
+
+\bibitem[Piazzesi(2010)]{piazzesi2010affine}
+M.~Piazzesi.
+\newblock Affine term structure models.
+\newblock In Y.~A{\"i}t-Sahalia and L.~P. Hansen, editors, \emph{Handbook of Financial Econometrics: Tools and Techniques}, volume~1, pages 691--766. Elsevier, 2010.
+\newblock \doi{10.1016/B978-0-444-50897-3.50015-8}.
+
+\bibitem[Svensson(1994)]{svensson1994estimating}
+L.~E.~O. Svensson.
+\newblock Estimating and interpreting forward interest rates: {S}weden 1992-1994.
+\newblock NBER Working Paper 4871, National Bureau of Economic Research, 1994.
+
+\end{thebibliography}

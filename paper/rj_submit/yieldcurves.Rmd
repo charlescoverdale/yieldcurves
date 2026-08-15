@@ -1,5 +1,5 @@
 ---
-title: "Yieldcurves: Yield Curve Fitting, Analysis, and Decomposition in R"
+title: "yieldcurves: Yield Curve Fitting, Analysis, and Decomposition in R"
 date: "2026-04-19"
 abstract: >
   The yieldcurves package provides an end-to-end toolkit for
