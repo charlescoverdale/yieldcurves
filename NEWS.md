@@ -1,3 +1,8 @@
+# yieldcurves (development version)
+
+* The fitted-curve print method showed the RMSE as a quoted string
+  (`RMSE: "4.7" bps`); it prints as a number again.
+
 # yieldcurves 0.1.0
 
 * Initial release.

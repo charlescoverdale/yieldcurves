@@ -30,7 +30,7 @@ print.yc_curve <- function(x, ...) {
   if (!is.null(x$residuals)) {
     rmse <- sqrt(mean(x$residuals^2))
     bullets <- c(bullets,
-      "*" = "RMSE: {.val {format(rmse * 10000, digits = 2)}} bps"
+      "*" = "RMSE: {.val {signif(rmse * 10000, 2)}} bps"
     )
   }
 
