@@ -63,6 +63,6 @@ fit
 #> • Type: "zero"
 #> • Maturities: 7 (0.25Y to 30Y)
 #> • Rate range: 4% to 5.2%
-#> • RMSE: "4.7" bps
+#> • RMSE: 4.7 bps
 #> • Parameters: beta0=0.04444, beta1=0.00837, beta2=-0.02454, tau=3
 ```

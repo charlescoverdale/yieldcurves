@@ -55,5 +55,5 @@ fit
 #> • Type: "zero"
 #> • Maturities: 7 (0.25Y to 30Y)
 #> • Rate range: 4% to 5.2%
-#> • RMSE: "0" bps
+#> • RMSE: 0 bps
 ```

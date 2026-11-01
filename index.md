@@ -28,12 +28,12 @@ rates <- c(0.052, 0.050, 0.048, 0.045, 0.042, 0.040, 0.043)
 
 fit <- yc_nelson_siegel(maturities, rates)
 fit
-#> -- Yield Curve (Nelson-Siegel) --
+#> -- Yield Curve (Nelson-Siegel) -------------------------------------------------
 #> * Type: "zero"
 #> * Maturities: 7 (0.25Y to 30Y)
 #> * Rate range: 4% to 5.2%
-#> * RMSE: 8.6 bps
-#> * Parameters: beta0=0.04127, beta1=0.01347, beta2=-0.0091, tau=1
+#> * RMSE: 4.7 bps
+#> * Parameters: beta0=0.04444, beta1=0.00837, beta2=-0.02454, tau=3
 
 plot(fit)
 ```
@@ -105,12 +105,12 @@ rates <- c(0.052, 0.050, 0.048, 0.045, 0.043, 0.042, 0.041,
 
 fit <- yc_nelson_siegel(maturities, rates)
 fit
-#> -- Yield Curve (Nelson-Siegel) --
+#> -- Yield Curve (Nelson-Siegel) -------------------------------------------------
 #> * Type: "zero"
 #> * Maturities: 10 (0.25Y to 30Y)
 #> * Rate range: 4% to 5.2%
-#> * RMSE: 8.6 bps
-#> * Parameters: beta0=0.04127, beta1=0.01347, beta2=-0.0091, tau=1
+#> * RMSE: 4.2 bps
+#> * Parameters: beta0=0.04443, beta1=0.00832, beta2=-0.02424, tau=3
 
 plot(fit)
 ```
@@ -124,18 +124,18 @@ rates. Discount factors tell you what a future cash flow is worth today.
 
 # Forward rates at 1, 5, and 10 years
 yc_forward(fit, maturities = c(1, 5, 10))
-#>   maturity forward_rate
-#> 1        1       0.0468
-#> 2        5       0.0393
-#> 3       10       0.0413
+#>  maturity forward_rate
+#>         1   0.04459906
+#>         5   0.03836919
+#>        10   0.04184287
 
 # Discount factors
 yc_discount(fit, maturities = c(1, 5, 10, 30))
-#>   maturity discount_factor
-#> 1        1          0.9530
-#> 2        5          0.8103
-#> 3       10          0.6619
-#> 4       30          0.2817   # $1 in 30 years is worth $0.28 today
+#>  maturity discount_factor
+#>         1       0.9528889
+#>         5       0.8135966
+#>        10       0.6657296
+#>        30       0.2766157
 ```
 
 ### Compute carry and roll-down
@@ -148,12 +148,18 @@ a lower-rate part of the curve.
 ``` r
 
 yc_carry(fit, maturities = c(2, 5, 10, 30))
-#>   maturity     carry   rolldown      total
-#> 1        2  0.000170  0.005143  0.005313   # 53 bps total on the 2Y
-#> 2        5  0.000013  0.004478  0.004491   # 45 bps on the 5Y
-#> 3       10 -0.000059  0.003260  0.003201   # 32 bps on the 10Y
-#> 4       30  0.000033 -0.001507 -0.001474   # Negative on the 30Y
+#>  maturity         carry      rolldown         total
+#>         2 -0.0005873884 -3.942174e-04 -0.0009816059
+#>         5 -0.0009202675 -2.424256e-04 -0.0011626930
+#>        10 -0.0009678477  9.430696e-05 -0.0008735407
+#>        30 -0.0007886508  1.316846e-04 -0.0006569663
 ```
+
+The example curve is inverted (the short rate is above the long rate),
+so carry is negative at every maturity: the bond yields less than the
+cost of funding it. Roll-down is negative at 2 and 5 years, where the
+bond rolls towards the higher short end, and slightly positive further
+out.
 
 ### Compute duration and convexity for a coupon bond
 
@@ -167,16 +173,16 @@ price drop.
 yc_bond_duration(face = 100, coupon_rate = 0.05, maturity = 10,
                  yield = 0.045, frequency = 2)
 #> $macaulay_duration
-#> [1] 8.05
-#>
+#> [1] 8.035564
+#> 
 #> $modified_duration
-#> [1] 7.87
-#>
+#> [1] 7.858742
+#> 
 #> $convexity
-#> [1] 73.7
-#>
+#> [1] 74.55061
+#> 
 #> $price
-#> [1] 104.01
+#> [1] 103.9909
 ```
 
 ### Compute the Z-spread on a bond
@@ -194,7 +200,7 @@ curve <- yc_curve(c(0.5, 1, 2, 5, 10), c(0.03, 0.035, 0.04, 0.042, 0.045))
 result <- yc_zspread(price = 95, coupon_rate = 0.04, maturity = 5,
                      curve = curve, frequency = 2)
 result$zspread
-#> [1] 0.0148   # 148 bps over the benchmark curve
+#> [1] 0.01029722
 ```
 
 ### Decompose yield curve movements with PCA
@@ -211,18 +217,28 @@ set.seed(42)
 n_days <- 200
 tenors <- c(1, 2, 5, 10, 30)
 base <- c(0.045, 0.043, 0.042, 0.040, 0.043)
-level <- cumsum(rnorm(n_days, 0, 0.001))
+# Random-walk level, slope and curvature factors, with Nelson-Siegel
+# loadings (tau = 2) for slope and curvature
+slope_load <- (1 - exp(-tenors / 2)) / (tenors / 2)
+curve_load <- slope_load - exp(-tenors / 2)
+level <- cumsum(rnorm(n_days, 0, 0.0010))
+slope <- cumsum(rnorm(n_days, 0, 0.0015))
+curv  <- cumsum(rnorm(n_days, 0, 0.0015))
 curves <- matrix(NA, n_days, length(tenors))
-for (i in seq_len(n_days)) curves[i, ] <- base + level[i]
+for (i in seq_len(n_days)) {
+  curves[i, ] <- base + level[i] + slope[i] * slope_load + curv[i] * curve_load
+}
 colnames(curves) <- paste0(tenors, "Y")
 
 pca <- yc_pca(curves)
 pca
-#> -- Yield Curve PCA --
+#> -- Yield Curve PCA -------------------------------------------------------------
 #> * Components: 3
-#> * PC1 (Level): 97.2% variance
-#> * PC2 (Slope): 1.2% variance
-#> * PC3 (Curvature): 0.8% variance
+#> * Tenors: 5 (1Y, 2Y, 5Y, 10Y, 30Y)
+#> * PC1 (Level): 97.7% variance
+#> * PC2 (Slope): 1.8% variance
+#> * PC3 (Curvature): 0.4% variance
+#> * Cumulative: 100%
 
 plot(pca)
 ```

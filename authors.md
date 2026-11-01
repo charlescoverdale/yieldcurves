@@ -10,13 +10,13 @@ Source:
 [`DESCRIPTION`](https://github.com/charlescoverdale/yieldcurves/blob/main/DESCRIPTION)
 
 Coverdale C (2026). *yieldcurves: Yield Curve Fitting, Analysis, and
-Decomposition*. R package version 0.1.0,
+Decomposition*. R package version 0.1.0.9000,
 <https://charlescoverdale.github.io/yieldcurves/>.
 
     @Manual{,
       title = {yieldcurves: Yield Curve Fitting, Analysis, and Decomposition},
       author = {Charles Coverdale},
       year = {2026},
-      note = {R package version 0.1.0},
+      note = {R package version 0.1.0.9000},
       url = {https://charlescoverdale.github.io/yieldcurves/},
     }
